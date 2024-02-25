@@ -6,6 +6,7 @@
     "check": "tsc"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.5",
     "@urql/core": "^4.2.3",
     "gql.tada": "^1.2.1",
     "react": "^18.2.0",

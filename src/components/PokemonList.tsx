@@ -1,53 +1,20 @@
-import { useQuery } from 'urql';
-import { graphql } from '../graphql';
+import { useQuery } from "@apollo/client";
+import { graphql } from "../graphql";
 
-import { PokemonItem, PokemonItemFragment } from './PokemonItem';
-import { CLAIM_DETAIL_QUERY } from '../queries';
-
-// prettier-ignore
-const PokemonsQuery = graphql(`
-  query Pokemons ($limit: Int = 10) {
-    pokemons(limit: $limit) {
-      id
-      ...PokemonItem
-    }
-  }
-`, [PokemonItemFragment]);
+import { PokemonItem, PokemonItemFragment } from "./PokemonItem";
+import { CLAIM_DETAIL_QUERY } from "../queries";
 
 const PokemonList = () => {
-  const [result] = useQuery({ query: PokemonsQuery });
-  const [result1] = useQuery({
-    query: CLAIM_DETAIL_QUERY,
-    variables: { claimId: '' },
+  // const [result] = useQuery({ query: PokemonsQuery });
+  const { data } = useQuery(CLAIM_DETAIL_QUERY, {
+    variables: { claimId: "" },
   });
 
-  const { data, fetching, error } = result;
-  const { data: data1 } = result;
+  // const { data, fetching, error } = result;
+  // const { data: data1 } = result;
+  // const { data: data2 } = result1;
 
-  if (error) {
-    return (
-      <>
-        <h3>Oh no!</h3>
-        <pre>{error.message}</pre>
-      </>
-    );
-  } else if (fetching || !data) {
-    return <h3>Loading...</h3>;
-  }
-
-  return (
-    <div>
-      {data.pokemons ? (
-        <ul>
-          {data.pokemons.map((pokemon, index) => (
-            <PokemonItem data={pokemon} key={pokemon?.id || index} />
-          ))}
-        </ul>
-      ) : (
-        <h3>Your Pokedex is empty.</h3>
-      )}
-    </div>
-  );
+  return <div></div>;
 };
 
 export { PokemonList };

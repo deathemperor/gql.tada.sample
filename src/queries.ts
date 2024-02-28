@@ -1,7 +1,7 @@
-import { graphql } from './graphql';
+import { graphql } from "./graphql";
 
 const CLAIM_DETAIL_FOR_TAT_FRAGMENT = graphql(`
-  fragment ClaimDetailForTat on claim_cases @_unmask {
+  fragment ClaimDetailForTat on claim_cases {
     tat_in_seconds
     action_logs(order_by: { created_at: desc }) {
       old_value
@@ -29,15 +29,13 @@ const CLAIM_DETAIL_FOR_TAT_FRAGMENT = graphql(`
 `);
 
 const CLAIM_ICON_FRAGMENT = graphql(`
-  fragment ClaimIcons on claim_cases @_unmask {
+  fragment ClaimIcons on claim_cases {
     id: claim_case_id
     code
     is_direct_billing
     is_accessible
     is_jet
     stp_status
-    tatInHourUpToNow @client
-    tatDayHourMin @client
     claim_source {
       value
       comment
@@ -79,7 +77,7 @@ const CLAIM_ICON_FRAGMENT = graphql(`
 
 // prettier-ignore
 const CLAIM_HISTORY_FRAGMENT = graphql(`
-  fragment HistoryClaimCase on claim_cases @_unmask {
+  fragment HistoryClaimCase on claim_cases {
     claim_case_id
     id: claim_case_id
     code
@@ -149,7 +147,7 @@ const CLAIM_HISTORY_FRAGMENT = graphql(`
 `, [CLAIM_DETAIL_FOR_TAT_FRAGMENT, CLAIM_ICON_FRAGMENT])
 
 const CLAIM_CASE_ON_CLAIM_DETAIL_FRAGMENT = graphql(`
-  fragment ClaimCaseOnGetClaimDetail on claim_cases @_unmask {
+  fragment ClaimCaseOnGetClaimDetail on claim_cases {
     claim_case_id
     id: claim_case_id
     code
@@ -183,8 +181,6 @@ const CLAIM_CASE_ON_CLAIM_DETAIL_FRAGMENT = graphql(`
     waiting_remarks
     stp_status
     jsonb_copay_mechanism_result
-    tatInHourUpToNow @client
-    tatDayHourMin @client
     insured_certificate {
       certificate_code
       phone
@@ -339,7 +335,7 @@ const CLAIM_CASE_ON_CLAIM_DETAIL_FRAGMENT = graphql(`
 
 // prettier-ignore
 const CLAIM_NOTES_ON_GET_CLAIM_DETAIL_FRAGMENT = graphql(`
-  fragment ClaimNotesOnGetClaimDetail on claim_notes @_unmask {
+  fragment ClaimNotesOnGetClaimDetail on claim_notes {
     id
     content
     created_at
@@ -358,7 +354,7 @@ const CLAIM_NOTES_ON_GET_CLAIM_DETAIL_FRAGMENT = graphql(`
 
 // prettier-ignore
 const FRAGMENTS = graphql(`
-  fragment InsuredBenefitOnClaimDetail on insured_benefits @_unmask {
+  fragment InsuredBenefitOnClaimDetail on insured_benefits {
     id
     code
     name
@@ -369,7 +365,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment PlanInsuredBenefitOnClaimDetail on plan_insured_benefits @_unmask {
+  fragment PlanInsuredBenefitOnClaimDetail on plan_insured_benefits {
     id
     is_direct_billing
     apply_copay
@@ -386,7 +382,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment ClaimPendingCodesOnGetClaimDetail on claim_pending_codes @_unmask {
+  fragment ClaimPendingCodesOnGetClaimDetail on claim_pending_codes {
     id: claim_pending_code_id
     code
     status
@@ -417,7 +413,7 @@ const FRAGMENTS = graphql(`
   }
 
 
-  fragment ClaimCaseDetailsOnGetClaimDetail on claim_case_details @_unmask {
+  fragment ClaimCaseDetailsOnGetClaimDetail on claim_case_details {
     claim_case_detail_id
     request_amount
     request_time
@@ -449,20 +445,20 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment PolicyWaitingTimesOnClaimDetail on policy_waiting_times @_unmask {
+  fragment PolicyWaitingTimesOnClaimDetail on policy_waiting_times {
     value
     description
     insured_benefit_types
   }
 
-  fragment PlanRemarkOnGetClaimDetail on plan_remarks @_unmask {
+  fragment PlanRemarkOnGetClaimDetail on plan_remarks {
     id
     description
     created_at
     plan_id
   }
 
-  fragment InsuredPersonRemarksOnGetClaimDetail on insured_person_remarks @_unmask {
+  fragment InsuredPersonRemarksOnGetClaimDetail on insured_person_remarks {
     id
     description
     insured_person_remark_benefit_type {
@@ -471,14 +467,14 @@ const FRAGMENTS = graphql(`
     created_at
   }
 
-  fragment CertificateRelatedEvent on insured_certificate_related_events @_unmask {
+  fragment CertificateRelatedEvent on insured_certificate_related_events {
     event_type
     old_value
     new_value
     effective_date
   }
 
-  fragment OriginalClaimCaseOnGetClaimCaseDetail on original_claim_cases @_unmask {
+  fragment OriginalClaimCaseOnGetClaimCaseDetail on original_claim_cases {
     id
     claim_case_beneficiary {
       id
@@ -506,7 +502,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment InsuredPersonClaimCasesHistory on insured_persons @_unmask {
+  fragment InsuredPersonClaimCasesHistory on insured_persons {
     claim_cases(where: { claim_case_id: { _neq: $claimId } }, order_by: { start_date: desc }) {
       ...HistoryClaimCase
     }
@@ -517,7 +513,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment InsuredPersonOnGetClaimDetail on insured_persons @_unmask {
+  fragment InsuredPersonOnGetClaimDetail on insured_persons {
     id: insured_person_id
     name
     phone
@@ -553,14 +549,14 @@ const FRAGMENTS = graphql(`
       id
     }
   }
-  fragment MetaReferenceOnGetClaimDetail on meta_references @_unmask {
+  fragment MetaReferenceOnGetClaimDetail on meta_references {
     string_value
     meta_reference {
       string_value
     }
   }
 
-  fragment PolicyCorrespondenceOnClaimDetail on policy_correspondences @_unmask {
+  fragment PolicyCorrespondenceOnClaimDetail on policy_correspondences {
     id
     auto_send
     send_when
@@ -597,7 +593,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment PolicySettingOnClaimDetail on policy_settings @_unmask {
+  fragment PolicySettingOnClaimDetail on policy_settings {
     use_sms
     turn_around_time_commitment
     correspondence_from_email
@@ -655,7 +651,7 @@ const FRAGMENTS = graphql(`
     claim_form_type
   }
 
-  fragment ClaimDocumentOnGetClaimDetail on claim_documents @_unmask {
+  fragment ClaimDocumentOnGetClaimDetail on claim_documents {
     id: claim_document_id
     created_at
     source
@@ -681,7 +677,6 @@ const FRAGMENTS = graphql(`
     file {
       id: file_id
       url
-      url_v2 @client
       mime_type
       original_file {
         id: file_id
@@ -695,7 +690,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment ClaimActionLog on audit_logs_record_status_changes @_unmask {
+  fragment ClaimActionLog on audit_logs_record_status_changes {
     created_at
     old_value
     new_value
@@ -708,7 +703,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment PlanBalancesOfClaimCase on plan_balances @_unmask {
+  fragment PlanBalancesOfClaimCase on plan_balances {
     id
     name
     value
@@ -727,7 +722,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment SyncLog on fwd_sync_logs @_unmask {
+  fragment SyncLog on fwd_sync_logs {
     data
     type
     direction
@@ -739,7 +734,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment CompanyCorrespondenceOnClaimDetail on company_correspondences @_unmask {
+  fragment CompanyCorrespondenceOnClaimDetail on company_correspondences {
     id
     send_when
     auto_send
@@ -776,7 +771,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment FromInsuredCertificate on insured_certificates @_unmask {
+  fragment FromInsuredCertificate on insured_certificates {
     id: insured_certificate_id
     issued_at
     dued_at
@@ -796,7 +791,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment ClaimCaseDetailFull on claim_cases @_unmask {
+  fragment ClaimCaseDetailFull on claim_cases {
     ...ClaimCaseOnGetClaimDetail
     ...ClaimIcons
     insured_certificate {
@@ -1190,7 +1185,7 @@ const FRAGMENTS = graphql(`
     }
   }
 
-  fragment slvClaimCaseGroup on slv_claim_case_same_event_groups @_unmask {
+  fragment slvClaimCaseGroup on slv_claim_case_same_event_groups {
     group_status {
       value
       comment
@@ -1214,7 +1209,7 @@ const FRAGMENTS = graphql(`
     claimant_phone
   }
 
-  fragment dateRangeForClaim on ClaimDateRange @_unmask {
+  fragment dateRangeForClaim on ClaimDateRange {
     id: key
     key
     certificateHistoryId
@@ -1242,7 +1237,7 @@ const FRAGMENTS = graphql(`
 
 // prettier-ignore
 const CLAIM_CASE_HISTORY_ON_INSURED_CERTIFICATE = graphql(`
-    fragment ClaimCasesHistory on insured_certificates @_unmask {
+    fragment ClaimCasesHistory on insured_certificates {
       claim_cases(where: { claim_case_id: { _neq: $claimId } }, order_by: { start_date: desc }) {
         ...HistoryClaimCase
       }
@@ -1267,198 +1262,303 @@ const CLAIM_DETAIL_QUERY = graphql(`
   [CLAIM_HISTORY_FRAGMENT, CLAIM_ICON_FRAGMENT, FRAGMENTS, CLAIM_CASE_HISTORY_ON_INSURED_CERTIFICATE],
 );
 
-const CLAIM_ALERT_QUERY = graphql(`
-  query getClaimAlert(
-    $insurerId: uuid!
-    $planId: uuid!
-    $certificateId: uuid!
-    $icdMetadataId: [uuid!]!
-    $medicalProviderId: uuid!
-    $claimToEffectiveDate: numeric!
-    $claimStartDate: timestamptz!
-    $policyId: uuid!
-  ) {
-    exclusionEntityDiseaseGroups: entity_disease_groups(
-      where: {
-        disease_group: {
-          insurer_id: { _eq: $insurerId }
-          _or: [
-            {
-              disease_group_icds: { icd_metadata_id: { _in: $icdMetadataId } }
-              is_disease_excluded: { _eq: false }
-            }
-            {
-              _not: { disease_group_icds: { icd_metadata_id: { _nin: $icdMetadataId } } }
-              is_disease_excluded: { _eq: true }
-            }
-          ]
+// prettier-ignore
+const CLAIM_DETAIL_QUERY2 = graphql(`
+    query getClaimDetail($claimId: uuid!, $withRemoteSchema: Boolean = true) {
+      claim_cases_by_pk(claim_case_id: $claimId) {
+        insured_certificate {
+          id: insured_certificate_id
         }
-        _or: [
-          {
-            entity_id: { _eq: $planId }
-            entity_type_value: { _eq: PLAN }
-            disease_group_type_value: { _eq: EXCLUSION }
-          }
-          {
-            entity_id: { _eq: $certificateId }
-            entity_type_value: { _eq: INSURED_CERTIFICATE }
-            disease_group_type_value: { _eq: EXCLUSION }
-          }
-        ]
-      }
-    ) {
-      id
-      entity_disease_group_type {
-        comment
-      }
-      disease_group {
-        id
-        name
-        disease_group_icds(where: { icd_metadata_id: { _in: $icdMetadataId } }) {
-          icd_metadata {
-            id: metadata_id
-            title
-            description
-            value
+        agent {
+          id
+          email
+          phone
+          name
+          code
+          watch_by {
+            insurer_id
+            id
           }
         }
-      }
-    }
-    waitingTimeEntityDiseaseGroups: entity_disease_groups(
-      where: {
-        disease_group: {
-          insurer_id: { _eq: $insurerId }
-          _or: [
-            {
-              disease_group_icds: { icd_metadata_id: { _in: $icdMetadataId } }
-              is_disease_excluded: { _eq: false }
-            }
-            {
-              _not: { disease_group_icds: { icd_metadata_id: { _nin: $icdMetadataId } } }
-              is_disease_excluded: { _eq: true }
-            }
-          ]
+        fwd_claim_case {
+          decline_code_value
+          decline_description
+          policy_note
+          exclusion_info
+          related_to_accident
         }
-        entity_id: { _eq: $planId }
-        entity_type_value: { _eq: PLAN }
-        disease_group_type_value: { _eq: WAITING_TIMES }
-        time_in_days: { _gte: $claimToEffectiveDate }
-      }
-    ) {
-      id
-      entity_disease_group_type {
-        comment
-      }
-      disease_group {
-        id
-        name
-        disease_group_icds(where: { icd_metadata_id: { _in: $icdMetadataId } }) {
-          icd_metadata {
-            title
-            description
-            value
+        mbal_claim_case {
+          id: claim_case_id
+          disease_group_id
+          is_fatca_us_citizen
+          is_fatca_us_related
+          is_fatca_us_tax_payer
+        }
+        slv_claim_case {
+          related_to_accident
+          disease_group_id
+        }
+
+        insured_person {
+          ...InsuredPersonOnGetClaimDetail
+          ...InsuredPersonClaimCasesHistory
+          insured_person_remarks(order_by: { created_at: desc }) {
+            ...InsuredPersonRemarksOnGetClaimDetail
           }
         }
-      }
-      time_in_days
-    }
-    pendingCodeDiseaseGroups: entity_disease_groups(
-      where: {
-        disease_group: {
-          insurer_id: { _eq: $insurerId }
-          _or: [
-            {
-              disease_group_icds: { icd_metadata_id: { _in: $icdMetadataId } }
-              is_disease_excluded: { _eq: false }
-            }
-            {
-              _not: { disease_group_icds: { icd_metadata_id: { _nin: $icdMetadataId } } }
-              is_disease_excluded: { _eq: true }
-            }
-          ]
+        claim_pending_codes(order_by: { created_at: asc }) {
+          ...ClaimPendingCodesOnGetClaimDetail
         }
-        entity_id: { _eq: $planId }
-        entity_type_value: { _eq: PLAN }
-        disease_group_type_value: { _eq: PENDING }
-        _or: [
-          { time_in_days: { _gte: $claimToEffectiveDate } }
-          { time_in_days: { _is_null: true } }
-        ]
-      }
-    ) {
-      id
-      entity_disease_group_type {
-        comment
-      }
-      disease_group {
-        id
-        name
-        disease_group_icds(where: { icd_metadata_id: { _in: $icdMetadataId } }) {
-          icd_metadata {
-            title
-            description
-            value
+        claim_notes(where: { type: { _in: [SignOff, PresentCaseNote, LaNote, MEDICAL_PROVIDER] } }, order_by: { created_at: asc }) {
+          ...ClaimNotesOnGetClaimDetail
+        }
+        assessment_summary: claim_notes(where: { type: { _eq: ASSESSMENT_SUMMARY } }, order_by: { created_at: desc }, limit: 1) {
+          ...ClaimNotesOnGetClaimDetail
+        }
+        assessment_explanation: claim_notes(where: { type: { _eq: ASSESSMENT_EXPLANATION } }, order_by: { created_at: desc }, limit: 1) {
+          id
+          content
+        }
+        claim_case_details {
+          ...ClaimCaseDetailsOnGetClaimDetail
+        }
+        claim_documents(order_by: { created_at: desc }) {
+          ...ClaimDocumentOnGetClaimDetail
+        }
+        claim_case_details_aggregate {
+          aggregate {
+            sum {
+              total_paid_amount
+              total_paid_amount_before_copay
+            }
           }
         }
-      }
-      time_in_days
-    }
-    medicalProviderWithGroups: mp_medical_providers_by_pk(medical_provider_id: $medicalProviderId) {
-      medical_provider_group_medical_providers(
-        where: {
-          medical_provider_group_history: {
-            medical_provider_group: { type: { _eq: REJECTION }, company_id: { _eq: $insurerId } }
-            start_date: { _lte: $claimStartDate }
-            _and: {
-              _or: [{ end_date: { _is_null: true } }, { end_date: { _gt: $claimStartDate } }]
+        medical_provider {
+          medical_provider_id
+          name
+          email
+          watch_by {
+            insurer_id
+            id
+          }
+          company_role {
+            id: company_id
+          }
+          medical_provider_mappings {
+            code
+            company_id
+            watch_by {
+              insurer_id
+              id
             }
-            _not: { medical_provider_group_applications: {} }
+          }
+          aliases {
+            id
+            name
+            normalized_name
           }
         }
-      ) {
-        id: medical_provider_id
-        medical_provider_group_history {
-          medical_provider_group {
+        claim_treatment_info_item {
+          room_fee
+          num_of_in_hospital_days
+          total_room_fee
+          test_fee
+          medicine_fee
+          surgery_fee
+          other_fee
+          teeth_treatment_fee
+          dental_tartar_removal_fee
+          examination_fee
+          time_in_hospital
+          unit_of_time_in_hospital
+        }
+        action_logs(order_by: { created_at: desc }) {
+          ...ClaimActionLog
+        }
+        presentCaseCorrespondenceHistories: correspondence_histories(
+          where: {
+            _or: [{ company_correspondence: { template: { send_when: { _eq: CLAIM_WAITING } } } }, { policy_correspondence: { template: { send_when: { _eq: CLAIM_WAITING } } } }]
+          }
+        ) {
+          id
+          status
+          destination
+          subject
+          message
+          content
+          created_at
+          company_correspondence {
+            id
+            template {
+              medium
+            }
+          }
+          policy_correspondence {
+            id
+            template {
+              medium
+            }
+          }
+        }
+        grace_period_start_date
+        grace_period_end_date
+        updated_at
+        updated_by_user {
+          name
+        }
+        claim_date_ranges @include(if: $withRemoteSchema) {
+          ranges {
+            ...dateRangeForClaim
+          }
+        }
+        claim_case_payment {
+          id: claim_case_id
+          requested_amount
+          estimated_paid_amount
+          actual_paid_amount
+          initial_premium_debt_amount
+          applied_premium_debt_amount
+          remaining_premium_debt_amount
+          co_payment_ratio
+          co_payment_amount
+          deductible_amount
+          coverage_amount
+          non_paid_amount
+          custom_amount
+          custom_amount_reason
+          shortfall_amount
+        }
+        claim_case_decline_histories(limit: 1, order_by: { created_at: desc }) {
+          id
+          decline_code
+          decline_description
+          deleted_at
+          deleted_reason
+        }
+        claim_case_group_claim_cases {
+          id
+          type
+          claim_case {
+            id: claim_case_id
+            code
+          }
+          claim_case_group {
+            id
             type
-            medical_provider_group_type {
+            claim_case_group_type {
               comment
             }
+            claim_case_group_claim_cases(where: { claim_case: {} }) {
+              id
+              claim_case_group_claim_case_type {
+                value
+                comment
+              }
+              claim_case {
+                claim_case_id
+                id: claim_case_id
+                benefit_type
+                code
+                is_direct_billing
+                status
+                event_date
+                physical_examination_date
+                admission_date
+                discharge_date
+                created_at
+                insured_certificate_id
+                insured_person {
+                  name
+                }
+                insured_benefit_type {
+                  value
+                  comment
+                }
+                claim_case_status {
+                  value
+                  comment
+                }
+                claim_case_group_claim_cases {
+                  claim_case_group_claim_case_type {
+                    value
+                    comment
+                  }
+                }
+              }
+            }
+          }
+        }
+        pti_claim_case {
+          benefit_type
+          disease_group
+        }
+        labels {
+          label {
+            id
+            name
+            description
+            color
+          }
+        }
+        ...ClaimDetailForTat
+        claim_case_beneficiary {
+          payment_method
+        }
+        claim_case_same_event_groups_claim_case {
+          id
+          claim_case_group_id
+          claim_case_same_event_group {
+            id
+            code
+            claim_case_same_event_groups_claim_cases {
+              claim_case {
+                grace_period_start_date
+                code
+                status
+                claim_pending_codes {
+                  code
+                  status
+                  pending_code {
+                    internal
+                  }
+                }
+              }
+            }
+            slv_claim_case_same_event_group {
+              ...slvClaimCaseGroup
+            }
           }
         }
       }
     }
-    medicalProviderWithRejectionApplication: mp_medical_providers_by_pk(
-      medical_provider_id: $medicalProviderId
-    ) {
-      medical_provider_id
-      medical_provider_group_medical_providers(
-        where: {
-          medical_provider_group_history: {
-            medical_provider_group_applications: { entity_id: { _eq: $policyId } }
-            medical_provider_group: { type: { _eq: REJECTION } }
-            start_date: { _lte: $claimStartDate }
-            _and: {
-              _or: [{ end_date: { _is_null: true } }, { end_date: { _gt: $claimStartDate } }]
-            }
-          }
-        }
-      ) {
-        id: medical_provider_id
-        medical_provider_group_history {
-          medical_provider_group {
-            type
-            medical_provider_group_type {
-              comment
-            }
-          }
+  `,
+  [
+    CLAIM_HISTORY_FRAGMENT,
+    CLAIM_ICON_FRAGMENT,
+    FRAGMENTS,
+    CLAIM_CASE_HISTORY_ON_INSURED_CERTIFICATE,
+  ],
+);
+
+// prettier-ignore
+const CLAIM_DETAIL_QUERY3 = graphql(`
+    query getClaimDetail($claimId: uuid!) {
+      claim_cases_by_pk(claim_case_id: $claimId) {
+        insured_certificate {
+          id: insured_certificate_id
         }
       }
     }
-  }
-`);
+  `,
+  [
+    CLAIM_HISTORY_FRAGMENT,
+    CLAIM_ICON_FRAGMENT,
+    FRAGMENTS,
+    CLAIM_CASE_HISTORY_ON_INSURED_CERTIFICATE,
+  ],
+);
 
 export {
-  CLAIM_ALERT_QUERY,
   CLAIM_DETAIL_QUERY,
   CLAIM_HISTORY_FRAGMENT,
   CLAIM_NOTES_ON_GET_CLAIM_DETAIL_FRAGMENT,
